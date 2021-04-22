@@ -2,12 +2,12 @@ import { getCustomRepository } from "typeorm";
 import { User } from "../entities/User";
 import { UsersRepository } from "../repositories/UsersRepository";
 
-interface IRequest {
+interface ICreateUserDTO {
   email: string
 }
 
 export class UsersService {
-  async create({ email }: IRequest): Promise<User>{
+  async create({ email }: ICreateUserDTO): Promise<User>{
     const usersRepository = getCustomRepository(UsersRepository)
 
     const userExists = await usersRepository.findOne({ email})
