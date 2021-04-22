@@ -7,6 +7,15 @@ interface ICreateSettingsDTO {
   username: string
 }
 
+interface IFindByUsernameDTO {
+  username: string
+}
+
+interface IUpdateSettingsDTO {
+  chat: boolean
+  username: string
+}
+
 export class SettingsService {
   private repository: Repository<Setting>
 
@@ -30,5 +39,18 @@ export class SettingsService {
     await this.repository.save(settings)
 
     return settings
+  }
+
+  async findByUsername({ username }: IFindByUsernameDTO) {
+    const settings = await this.repository.findOne({ username })
+    return settings
+  }
+
+  async update({ username, chat}: IUpdateSettingsDTO) {
+    const settings = await this.repository.createQueryBuilder()
+      .update(Setting)
+      .set({ chat })
+      .where('username = :username', { username })
+      .execute()
   }
 }
