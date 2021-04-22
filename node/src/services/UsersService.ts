@@ -14,7 +14,6 @@ export class UsersService {
   }
 
   async create({ email }: ICreateUserDTO): Promise<User>{
-
     const userExists = await this.repository.findOne({ email})
 
     if(userExists) {
