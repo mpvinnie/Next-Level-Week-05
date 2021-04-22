@@ -1,4 +1,5 @@
-import { getCustomRepository } from "typeorm"
+import { getCustomRepository, Repository } from "typeorm"
+import { Setting } from "../entities/Setting"
 import { SettingsRepository } from "../repositories/SettingsRepository"
 
 interface ICreateSettingsDTO {
@@ -7,21 +8,26 @@ interface ICreateSettingsDTO {
 }
 
 export class SettingsService {
-  async create({ chat, username}: ICreateSettingsDTO) {
-    const settingsRepository = getCustomRepository(SettingsRepository)
+  private repository: Repository<Setting>
 
-    const userAlreadyExists = await settingsRepository.findOne({ username })
+  constructor() {
+    this.repository = getCustomRepository(SettingsRepository)
+  }
+
+  async create({ chat, username}: ICreateSettingsDTO) {
+
+    const userAlreadyExists = await this.repository.findOne({ username })
 
     if(userAlreadyExists) {
       throw new Error('User already exists')
     }
 
-    const settings = settingsRepository.create({
+    const settings = this.repository.create({
       chat,
       username
     })
 
-    await settingsRepository.save(settings)
+    await this.repository.save(settings)
 
     return settings
   }

@@ -14,4 +14,14 @@ export class MessagesController {
 
     return response.status(201).json(message)
   }
+
+  async listByUser(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params
+
+    const messagesService = new MessagesService()
+
+    const messages = await messagesService.listByUser({ user_id: id })
+
+    return response.json(messages)
+  }
 }

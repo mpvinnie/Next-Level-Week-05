@@ -13,4 +13,5 @@ routes.post('/settings', settingsController.create)
 
 routes.post('/users', usersController.create)
 
+routes.get('/messages/:id', messagesController.listByUser)
 routes.post('/messages', messagesController.create)

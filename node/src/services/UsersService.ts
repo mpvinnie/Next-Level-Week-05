@@ -1,4 +1,4 @@
-import { getCustomRepository } from "typeorm";
+import { getCustomRepository, Repository } from "typeorm";
 import { User } from "../entities/User";
 import { UsersRepository } from "../repositories/UsersRepository";
 
@@ -7,20 +7,25 @@ interface ICreateUserDTO {
 }
 
 export class UsersService {
-  async create({ email }: ICreateUserDTO): Promise<User>{
-    const usersRepository = getCustomRepository(UsersRepository)
+  private repository: Repository<User>
 
-    const userExists = await usersRepository.findOne({ email})
+  constructor() {
+    this.repository = getCustomRepository(UsersRepository)
+  }
+
+  async create({ email }: ICreateUserDTO): Promise<User>{
+
+    const userExists = await this.repository.findOne({ email})
 
     if(userExists) {
       return userExists
     }
 
-    const user = usersRepository.create({
+    const user = this.repository.create({
       email
     })
 
-    await usersRepository.save(user)
+    await this.repository.save(user)
 
     return user
   }
