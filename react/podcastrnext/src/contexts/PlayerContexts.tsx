@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from 'react'
+import { createContext, ReactNode, useContext, useState } from 'react'
 
 type Episode = {
   title: string
@@ -22,7 +22,7 @@ type PlayerContextData = {
   hasPrevious: boolean
 }
 
-export const PlayerContext = createContext({} as PlayerContextData)
+const PlayerContext = createContext({} as PlayerContextData)
 
 type PlayerContextProviderProps = {
   children: ReactNode
@@ -89,4 +89,8 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
       {children}
     </PlayerContext.Provider>
   )
+}
+
+export const usePlayer = () => {
+  return useContext(PlayerContext)
 }

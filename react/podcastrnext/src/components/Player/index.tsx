@@ -1,11 +1,10 @@
-import { useContext, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css'
 
-import { PlayerContext } from '../../contexts/PlayerContexts'
-
 import styles from './styles.module.scss'
+import { usePlayer } from '../../contexts/PlayerContexts'
 
 export function Player() {
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -20,7 +19,7 @@ export function Player() {
     setPlayingState,
     hasNext,
     hasPrevious
-  } = useContext(PlayerContext)
+  } = usePlayer()
 
   const episode = episodeList[currentEpisodeIndex]
 
