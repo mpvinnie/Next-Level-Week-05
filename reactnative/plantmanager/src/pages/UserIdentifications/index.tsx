@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useState } from 'react'
-import { Platform } from 'react-native'
+import { Keyboard, Platform, TouchableWithoutFeedback } from 'react-native'
 import { Button } from '../../components/Button'
 
 import {
@@ -46,37 +46,39 @@ export function UserIdentification() {
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <Content>
-          <Form>
-            <FormHeader>
-              <Emoji>
-                { isFilled ? '😄' : '😀'}
-              </Emoji>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <Content>
+            <Form>
+              <FormHeader>
+                <Emoji>
+                  { isFilled ? '😄' : '😀'}
+                </Emoji>
 
-              <Title>
-                Como podemos {'\n'}
-                chamar você
-              </Title>
-            </FormHeader>
+                <Title>
+                  Como podemos {'\n'}
+                  chamar você
+                </Title>
+              </FormHeader>
 
-            <Input
-              placeholder="Digite um nome"
-              onBlur={handleInputBlur}
-              onFocus={handleInputFocus}
-              isFocused={isFocused}
-              onChangeText={handleInputChange}
-              isFilled={isFilled}
-            />
+              <Input
+                placeholder="Digite um nome"
+                onBlur={handleInputBlur}
+                onFocus={handleInputFocus}
+                isFocused={isFocused}
+                onChangeText={handleInputChange}
+                isFilled={isFilled}
+                />
 
-            <Footer>
-              <Button
-                onPress={handleSubmit}
-              >
-                Confirmar
-              </Button>
-            </Footer>
-          </Form>
-        </Content>
+              <Footer>
+                <Button
+                  onPress={handleSubmit}
+                  >
+                  Confirmar
+                </Button>
+              </Footer>
+            </Form>
+          </Content>
+          </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     </Container>
   )
