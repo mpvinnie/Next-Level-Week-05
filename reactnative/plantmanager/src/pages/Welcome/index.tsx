@@ -1,5 +1,6 @@
 import React from 'react'
 import { Feather } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/core'
 
 import wateringImg from '../../assets/watering.png'
 
@@ -14,6 +15,12 @@ import {
 import colors from '../../styles/colors'
 
 export function Welcome() {
+  const { navigate } = useNavigation()
+
+  function handleStart() {
+    navigate('UserIdentification')
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -33,7 +40,9 @@ export function Welcome() {
           Nós cuidamos de lembrar você sempre que precisar.
         </Subtitle>
 
-        <NextButton>
+        <NextButton
+          onPress={handleStart}
+        >
             <Feather
               name="chevron-right"
               size={32}

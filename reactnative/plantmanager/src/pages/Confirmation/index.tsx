@@ -22,7 +22,9 @@ export function Confirmation() {
         </Subtitle>
 
         <Footer>
-          <Button title="Confirmar" />
+          <Button>
+            Começar
+          </Button>
         </Footer>
       </Content>
     </Container>

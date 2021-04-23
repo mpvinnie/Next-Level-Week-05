@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import React, { useState } from 'react'
 import { Platform } from 'react-native'
 import { Button } from '../../components/Button'
@@ -15,6 +16,8 @@ import {
 } from './styles'
 
 export function UserIdentification() {
+  const { navigate } = useNavigation()
+  
   const [isFocused, setIsFocused] = useState(false)
   const [isFilled, setIsFilled] = useState(false)
   const [name, setName] = useState<string>()
@@ -31,6 +34,11 @@ export function UserIdentification() {
   function handleInputChange(value: string) {
     setIsFilled(!!value)
     setName(value)
+  }
+
+
+  function handleSubmit() {
+    navigate('Confirmation')
   }
 
   return (
@@ -61,7 +69,11 @@ export function UserIdentification() {
             />
 
             <Footer>
-              <Button title="Confirmar" />
+              <Button
+                onPress={handleSubmit}
+              >
+                Confirmar
+              </Button>
             </Footer>
           </Form>
         </Content>
