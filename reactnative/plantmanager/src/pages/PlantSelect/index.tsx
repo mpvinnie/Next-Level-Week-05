@@ -1,9 +1,11 @@
+import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { View, ActivityIndicator } from 'react-native'
 import { EnvironmentButton } from '../../components/EnvironmentButton'
 import { Header } from '../../components/Header'
 import { Load } from '../../components/Load'
 import { PlantCardPrimary } from '../../components/PlantCardPrimary'
+import { Plant } from '../../libs/storage'
 import { api } from '../../services/api'
 import colors from '../../styles/colors'
 
@@ -22,19 +24,6 @@ export interface Environment {
   title: string
 }
 
-export interface Plant {
-  id: number
-  name: string
-  about: string
-  water_tips: string
-  photo: string
-  environments: [string]
-  frequency: {
-    times: number
-    repeat_every: string
-  }
-}
-
 export function PlantSelect() {
   const [environments, setEnvironments] = useState<Environment[]>([])
   const [plants, setPlants] = useState<Plant[]>([])
@@ -42,9 +31,10 @@ export function PlantSelect() {
   const [environmentSelected, setEnvironmentSelected] = useState('all')
   const [loading, setLoading] = useState(true)
 
+  const { navigate } = useNavigation()
+
   const [page, setPage] = useState(1)
   const [loadingMore, setLoadingMore] = useState(false)
-  const [loadedAll, setLoadedALl] = useState(false)
 
   useEffect(() => {
     async function fetchEviroments() {
@@ -116,6 +106,10 @@ export function PlantSelect() {
     setFilteredPlants(filtered)
   }
 
+  function handlePlantSelect(plant: Plant) {
+    navigate('PlantSave', { plant })
+  }
+
   if(loading) {
     return <Load />
   }
@@ -154,7 +148,7 @@ export function PlantSelect() {
           data={filteredPlants}
           keyExtractor={plant => String(plant.id)}
           renderItem={({ item: plant}) => (
-            <PlantCardPrimary data={plant} />
+            <PlantCardPrimary onPress={() => handlePlantSelect(plant)} data={plant} />
           )}
           showsVerticalScrollIndicator={false}
           numColumns={2}

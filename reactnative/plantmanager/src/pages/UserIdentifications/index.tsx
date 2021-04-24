@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useState } from 'react'
-import { Keyboard, Platform, TouchableWithoutFeedback } from 'react-native'
+import { Alert, Keyboard, Platform, TouchableWithoutFeedback } from 'react-native'
 import { Button } from '../../components/Button'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import {
   Container,
@@ -37,7 +38,13 @@ export function UserIdentification() {
   }
 
 
-  function handleSubmit() {
+  async function handleSubmit() {
+    if(!name) {
+      return Alert.alert('Me diz como chamar você 😥')
+    }
+
+    await AsyncStorage.setItem('@PlantManager:user', name)
+
     navigate('Confirmation')
   }
 

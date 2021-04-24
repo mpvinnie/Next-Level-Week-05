@@ -15,9 +15,6 @@ export default function App() {
     return <AppLoading />
 
   return (
-    <>
-      <StatusBar barStyle="dark-content" backgroundColor="white" />
-      <Routes />
-    </>
+    <Routes />
   )
 }
