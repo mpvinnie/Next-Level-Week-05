@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { EnvironmentButton } from '../../components/EnvironmentButton'
 import { Header } from '../../components/Header'
+import { Load } from '../../components/Load'
 import { PlantCardPrimary } from '../../components/PlantCardPrimary'
 import { api } from '../../services/api'
 
@@ -38,6 +39,7 @@ export function PlantSelect() {
   const [plants, setPlants] = useState<Plant[]>([])
   const [filteredPlants, setFilteredPlants] = useState<Plant[]>([])
   const [environmentSelected, setEnvironmentSelected] = useState('all')
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function fetchEviroments() {
@@ -68,6 +70,8 @@ export function PlantSelect() {
         }
       })
       setPlants(data)
+      setFilteredPlants(data)
+      setLoading(false)
     }
 
     fetchPlants()
@@ -83,6 +87,10 @@ export function PlantSelect() {
     const filtered = plants.filter(plant => plant.environments.includes(environment))
 
     setFilteredPlants(filtered)
+  }
+
+  if(loading) {
+    return <Load />
   }
 
   return (
@@ -116,7 +124,7 @@ export function PlantSelect() {
 
       <PlantsContainer>
         <PlantList
-          data={environmentSelected === 'all' ? plants : filteredPlants}
+          data={filteredPlants}
           keyExtractor={plant => String(plant.id)}
           renderItem={({ item: plant}) => (
             <PlantCardPrimary data={plant} />
