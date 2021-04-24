@@ -1,11 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
-import { EnviromentButton } from '../../components/EnviromentButton'
+import { EnvironmentButton } from '../../components/EnvironmentButton'
 import { Header } from '../../components/Header'
+import { api } from '../../services/api'
 
-import { Container, HeaderContainer, Title, Subtitle, EnviromentList } from './styles'
+import { Container, HeaderContainer, Title, Subtitle, EnvironmentList } from './styles'
+
+export interface Environment {
+  key: string
+  title: string
+}
 
 export function PlantSelect() {
+  const [environments, setEnvironments] = useState<Environment[]>([])
+
+  useEffect(() => {
+    async function fetchEviroment() {
+      const { data } = await api.get('plants_environments')
+      setEnvironments([
+        {
+          key: 'all',
+          title: 'Todos'
+        },
+        ...data
+      ])
+    }
+
+    fetchEviroment()
+  }, [])
+
   return (
     <Container>
       <HeaderContainer>
@@ -20,10 +43,11 @@ export function PlantSelect() {
       </HeaderContainer>
 
       <View>
-        <EnviromentList
-          data={[1, 2, 3, 4, 5]}
-          renderItem={({ item }) => (
-            <EnviromentButton title="Cozinha" active onPress={() => {}} />
+        <EnvironmentList
+          data={environments}
+          keyExtractor={environment => environment.key}
+          renderItem={({ item: environment }) => (
+            <EnvironmentButton title={environment.title} onPress={() => {}} />
           )}
           horizontal
           showsHorizontalScrollIndicator={false}
