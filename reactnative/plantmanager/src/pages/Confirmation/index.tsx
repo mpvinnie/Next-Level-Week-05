@@ -1,5 +1,8 @@
 import React from 'react'
+import { useNavigation } from '@react-navigation/core'
+
 import { Button } from '../../components/Button'
+
 import {
   Container,
   Content,
@@ -10,6 +13,12 @@ import {
 } from './styles'
 
 export function Confirmation() {
+  const { navigate } = useNavigation()
+
+  function handleMoveOn() {
+    navigate('PlantSelect')
+  }
+
   return (
     <Container>
       <Content>
@@ -22,7 +31,7 @@ export function Confirmation() {
         </Subtitle>
 
         <Footer>
-          <Button>
+          <Button onPress={handleMoveOn}>
             Começar
           </Button>
         </Footer>
