@@ -2,7 +2,7 @@ import { FlatList } from 'react-native'
 import styled from 'styled-components/native'
 import colors from '../../styles/colors'
 import fonts from '../../styles/fonts'
-import { Environment } from '.'
+import { Environment, Plant } from '.'
 
 export const Container = styled.View`
   flex: 1;
@@ -34,5 +34,17 @@ export const EnvironmentList = styled(FlatList as new () => FlatList<Environment
     paddingBottom: 5,
     paddingHorizontal: 32,
     marginVertical: 30
+  }
+})``
+
+export const PlantsContainer = styled.View`
+  flex: 1;
+  padding: 0 32px;
+`
+
+export const PlantList = styled(FlatList as new () => FlatList<Plant>).attrs({
+  columnWrapperStyle: {
+    justifyContent: 'space-between',
+    marginBottom: 16
   }
 })``
