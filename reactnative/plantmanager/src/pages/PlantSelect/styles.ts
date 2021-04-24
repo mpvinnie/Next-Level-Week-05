@@ -5,6 +5,9 @@ import fonts from '../../styles/fonts'
 export const Container = styled.View`
   flex: 1;
   background: ${colors.background};
+`
+
+export const HeaderContainer = styled.View`
   padding: 0 32px;
 `
 
@@ -22,3 +25,12 @@ export const  Subtitle = styled.Text`
   color: ${colors.heading};
 `
 
+export const EnviromentList = styled.FlatList.attrs({
+  contentContainerStyle: {
+    height: 40,
+    justifyContent: 'center',
+    paddingBottom: 5,
+    paddingHorizontal: 32,
+    marginVertical: 30
+  }
+})``
