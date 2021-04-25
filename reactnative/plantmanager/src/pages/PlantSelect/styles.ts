@@ -2,7 +2,8 @@ import { FlatList } from 'react-native'
 import styled from 'styled-components/native'
 import colors from '../../styles/colors'
 import fonts from '../../styles/fonts'
-import { Environment, Plant } from '.'
+import { Environment } from '.'
+import { Plant } from '../../libs/storage'
 
 export const Container = styled.View`
   flex: 1;

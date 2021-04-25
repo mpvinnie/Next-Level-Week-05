@@ -13,6 +13,7 @@ export interface Plant {
     repeat_every: string
   },
   dateTimeNotification: Date
+  hour: string
 }
 
 interface StoragePlantProps {
@@ -43,6 +44,8 @@ export async function loadPlant(): Promise<Plant[]> {
   try {
     const data = await AsyncStorage.getItem('@PlantManager:plants')
     const plants = data ? JSON.parse(data) as StoragePlantProps : {}
+
+    console.log(plants)
 
     const plantsSorted = Object.keys(plants).map(plant => {
       return {
