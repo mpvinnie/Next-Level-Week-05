@@ -4,11 +4,11 @@ import colors from '../../styles/colors'
 import fonts from '../../styles/fonts'
 
 export const Container = styled(RectButton)`
-  width: 100%;
+  height: 90px;
   padding: 20px 10px;
   border-radius: 20px;
   background: ${colors.shape};
-  margin: 5px 0;
+  margin: 5px 32px;
   flex-direction: row;
   align-items: center;
 `
@@ -38,3 +38,13 @@ export const Time = styled.Text`
   color: ${colors.body_dark};
 `
 
+export const ButtonRemove = styled(RectButton)`
+  width: 100px;
+  height: 90px;
+  background: ${colors.red};
+  margin-top: 5px;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  right: 32px;
+`

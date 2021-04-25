@@ -1,7 +1,7 @@
 import { formatDistance } from 'date-fns'
 import { pt } from 'date-fns/locale'
 import React, { useEffect, useState } from 'react'
-import { FlatList } from 'react-native'
+import { Alert, FlatList } from 'react-native'
 
 import waterdrop from '../../assets/waterdrop.png'
 
@@ -9,10 +9,11 @@ import { Header } from '../../components/Header'
 import { Load } from '../../components/Load'
 import { PlantCardSecondary } from '../../components/PlantCardSecondary'
 
-import { loadPlant, Plant } from '../../libs/storage'
+import { loadPlant, Plant, removePlant } from '../../libs/storage'
 
 import {
   Container,
+  HeaderContainer,
   Spotlight,
   SpotlightImage,
   SpotlightText,
@@ -44,6 +45,27 @@ export function MyPlants() {
 
     loadStorageData()
   }, [])
+  
+  function handleRemove(plant: Plant) {
+    Alert.alert('Remover', `Deseja remover a ${plant.name}`, [
+      {
+        text: 'Não 🙏🏻',
+        style: 'cancel'
+      },
+      {
+        text: 'Sim 😢',
+        onPress: async () => {
+          try {
+            await removePlant(plant.id)
+
+            setMyPlants(state => state.filter(currentPlant => currentPlant.id !== plant.id))
+          } catch (err) {
+            Alert.alert('Não foi possível remover! 😢')
+          }
+        }
+      }
+    ])
+  }
 
   if(loading) {
     return <Load />
@@ -51,13 +73,14 @@ export function MyPlants() {
 
   return (
     <Container>
-      <Header />
+      <HeaderContainer>
+        <Header />
 
-      <Spotlight>
-        <SpotlightImage source={waterdrop} />
-
-        <SpotlightText>{nextWaterd}</SpotlightText>
-      </Spotlight>
+        <Spotlight>
+          <SpotlightImage source={waterdrop} />
+          <SpotlightText>{nextWaterd}</SpotlightText>
+        </Spotlight>
+      </HeaderContainer>
 
       <Plants>
         <PlantsTitle>Próximas regadas</PlantsTitle>
@@ -66,12 +89,12 @@ export function MyPlants() {
           data={myPlants}
           keyExtractor={plant => String(plant.id)}
           renderItem={({ item: plant }) => (
-            <PlantCardSecondary data={plant} />
+            <PlantCardSecondary data={plant} handleRemove={() => handleRemove(plant)} />
           )}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             paddingTop: 8,
-            paddingBottom: 24
+            paddingBottom: 24,
           }}
         />
       </Plants>

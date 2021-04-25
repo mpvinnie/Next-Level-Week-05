@@ -16,7 +16,7 @@ export interface Plant {
   hour: string
 }
 
-interface StoragePlantProps {
+export interface StoragePlantProps {
   [id: string]: {
     data: Plant
   }
@@ -45,8 +45,6 @@ export async function loadPlant(): Promise<Plant[]> {
     const data = await AsyncStorage.getItem('@PlantManager:plants')
     const plants = data ? JSON.parse(data) as StoragePlantProps : {}
 
-    console.log(plants)
-
     const plantsSorted = Object.keys(plants).map(plant => {
       return {
         ...plants[plant].data,
@@ -61,4 +59,13 @@ export async function loadPlant(): Promise<Plant[]> {
   } catch (err) {
     throw new Error(err)
   }
+}
+
+export async function removePlant(id: number): Promise<void> {
+    const data = await AsyncStorage.getItem('@PlantManager:plants')
+    const plants = data ? JSON.parse(data) as StoragePlantProps : {}
+
+    delete plants[id]
+
+    await AsyncStorage.setItem('@PlantManager:plants', JSON.stringify(plants))
 }

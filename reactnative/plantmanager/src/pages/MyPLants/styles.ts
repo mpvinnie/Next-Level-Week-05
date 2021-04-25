@@ -4,10 +4,14 @@ import fonts from '../../styles/fonts'
 
 export const Container = styled.View`
   flex: 1;
-  padding: 50px 32px 0px;
   align-items: center;
   justify-content: space-between;
   background: ${colors.background};
+`
+
+export const HeaderContainer = styled.View`
+  width: 100%;
+  padding: 50px 32px 24px;
 `
 
 export const Spotlight = styled.View`
@@ -25,7 +29,7 @@ export const  SpotlightImage = styled.Image`
   height: 56px;
 `
 
-export const  SpotlightText = styled.Text`
+export const SpotlightText = styled.Text`
   flex: 1;
   color: ${colors.blue};
   padding: 0 20px;
@@ -37,12 +41,11 @@ export const  SpotlightText = styled.Text`
 export const  Plants = styled.View`
   flex: 1;
   width: 100%;
-  /* padding-bottom: 32px; */
 `
 
 export const  PlantsTitle = styled.Text`
   font-size: 24px;
   font-family: ${fonts.heading};
   color: ${colors.heading};
-  margin: 20px 0;
+  margin: 16px 32px;
 `
