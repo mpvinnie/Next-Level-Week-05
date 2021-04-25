@@ -6,6 +6,7 @@ import { FlatList } from 'react-native'
 import waterdrop from '../../assets/waterdrop.png'
 
 import { Header } from '../../components/Header'
+import { Load } from '../../components/Load'
 import { PlantCardSecondary } from '../../components/PlantCardSecondary'
 
 import { loadPlant, Plant } from '../../libs/storage'
@@ -43,6 +44,10 @@ export function MyPlants() {
 
     loadStorageData()
   }, [])
+
+  if(loading) {
+    return <Load />
+  }
 
   return (
     <Container>
