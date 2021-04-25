@@ -7,7 +7,7 @@ import { Alert, Platform } from 'react-native'
 import { SvgFromUri } from 'react-native-svg'
 import waterdrop from '../../assets/waterdrop.png'
 import { Button } from '../../components/Button'
-import { Plant } from '../../libs/storage'
+import { loadPlant, Plant, savePlant } from '../../libs/storage'
 
 import {
   Container,
@@ -53,6 +53,17 @@ export function PlantSave() {
     setShowDatePicker(state => !state)
   }
 
+  async function handleSave() {
+    try {
+      await savePlant({
+        ...plant,
+        dateTimeNotification: selectedDateTime
+      })
+    } catch {
+      Alert.alert('Não foi possível salvar. 😥')
+    }
+  }
+
   return (
     <Container>
       <PlantInfo>
@@ -89,7 +100,7 @@ export function PlantSave() {
           </DateTimePickerButton>
         )}
 
-        <Button>
+        <Button onPress={handleSave}>
           Cadastrar planta
         </Button>
       </Controller>
